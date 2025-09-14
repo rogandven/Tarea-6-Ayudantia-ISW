@@ -1,4 +1,4 @@
-import { handleSuccess } from "../Handlers/responseHandlers.js";
+import { handleErrorClient, handleSuccess } from "../Handlers/responseHandlers.js";
 
 export function getPublicProfile(req, res) {
   handleSuccess(res, 200, "Perfil público obtenido exitosamente", {
@@ -13,4 +13,12 @@ export function getPrivateProfile(req, res) {
     message: `¡Hola, ${user.email}! Este es tu perfil privado. Solo tú puedes verlo.`,
     userData: user,
   });
+}
+
+export function editPrivateProfile(req, res) {
+  handleErrorClient(res, 400, "fooEdit");
+}
+
+export function deletePrivateProfile(req, res) {
+  handleErrorClient(res, 400, "fooDelete");
 }
