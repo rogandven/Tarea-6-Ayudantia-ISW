@@ -1,9 +1,12 @@
 import { loginUser } from "../services/auth.service.js";
 import { createUser } from "../services/user.service.js";
 import { handleSuccess, handleErrorClient, handleErrorServer } from "../Handlers/responseHandlers.js";
+import { validateRequest } from "./global.controller.js";
 
 export async function login(req, res) {
   try {
+    validateRequest(req.body, res);
+
     const { email, password } = req.body;
     
     if (!email || !password) {
@@ -19,6 +22,8 @@ export async function login(req, res) {
 
 export async function register(req, res) {
   try {
+    validateRequest(req.body, res);;
+
     const data = req.body;
     
     if (!data.email || !data.password) {

@@ -34,6 +34,8 @@ export class NotasController {
 
   async createNota(req, res) {
     try {
+      validateRequest(req.body, res);;
+
       const data = req.body;
       
       if (!data || Object.keys(data).length === 0) {
@@ -49,6 +51,8 @@ export class NotasController {
 
   async updateNota(req, res) {
     try {
+      validateRequest(req.body, res);;
+
       const { id } = req.params;
       const changes = req.body;
       
