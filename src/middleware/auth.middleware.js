@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import { handleErrorClient, handleErrorServer } from "../Handlers/responseHandlers.js";
+import { isTokenBlacklisted } from "../services/auth.service.js";
 
-export function authMiddleware(req, res, next) {
+export async function authMiddleware(req, res, next) {
   const authHeader = req.headers["authorization"];
 
   if (!authHeader) {
@@ -17,6 +18,10 @@ export function authMiddleware(req, res, next) {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = payload;
+    const isBlackListedToken = await isTokenBlacklisted(token);
+    if (isBlackListedToken) {
+      throw new Error();
+    }
     next();
   } catch (error) {
     return handleErrorClient(res, 401, "Token inválido o expirado.", error.message);
@@ -50,4 +55,20 @@ export function getUserFromToken(req, res) {
   } catch (error) {
     return handleErrorClient(res, 401, "Token inválido o expirado.", error.message);
   }
+}
+
+export function getToken(req) {
+  const authHeader = req.headers["authorization"];
+
+  if (!authHeader) {
+    return undefined;
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    return undefined;
+  }
+
+  return token;
 }

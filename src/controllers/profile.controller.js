@@ -1,5 +1,6 @@
 import { handleErrorClient, handleSuccess } from "../Handlers/responseHandlers.js";
-import { getUserFromToken } from "../middleware/auth.middleware.js";
+import { getToken, getUserFromToken } from "../middleware/auth.middleware.js";
+import { blackListToken } from "../services/auth.service.js";
 import { editUser, deleteUser } from "../services/user.service.js";
 
 export function getPublicProfile(req, res) {
@@ -64,7 +65,9 @@ export async function deletePrivateProfile(req, res) {
   }
   try {
     await deleteUser(oldData);
+    await blackListToken(getToken(req));    
     handleSuccess(res, 200, "Perfil eliminado con éxito");
+    return;
   } catch (error) {
     const errorMessage = (error.message || "Error desconocido");
     handleErrorClient(res, 400, errorMessage);
