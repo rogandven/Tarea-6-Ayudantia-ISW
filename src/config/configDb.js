@@ -19,6 +19,7 @@ export const AppDataSource = new DataSource({
   entities: ["src/entities/**/*.js"],
   synchronize: true, 
   logging: false,
+  autoLoadEntities: true,
 });
 
 export async function connectDB() {
