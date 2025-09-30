@@ -28,6 +28,7 @@ export const AppDataSource = new DataSource({
 
 export async function connectDB() {
   try {
+    console.log(AppDataSource.entities);
     await AppDataSource.initialize();
     // await AppDataSource.synchronize();
     console.log("=> Conexión exitosa a la base de datos PostgreSQL!");
