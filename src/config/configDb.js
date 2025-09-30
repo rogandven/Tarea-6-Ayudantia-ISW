@@ -1,6 +1,8 @@
 "use strict";
 import { DataSource } from "typeorm";
 import { DATABASE, DB_USERNAME, HOST, DB_PASSWORD, DB_PORT } from "./configEnv.js";
+import { User } from "../entities/user.entity.js";
+import { TokenBlackList } from "../entities/token.blacklist.entity.js";
 
 // console.log("DATABASE: " + DATABASE);
 // console.log("DB_USERNAME: " + DB_USERNAME);
@@ -16,7 +18,7 @@ export const AppDataSource = new DataSource({
   username: `${DB_USERNAME}`,
   password: `${DB_PASSWORD}`,
   database: `${DATABASE}`,
-  entities: ["src/entities/**/*.js"],
+  entities: {User, TokenBlackList},
   synchronize: true, 
   logging: false,
 });
