@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
   username: `${DB_USERNAME}`,
   password: `${DB_PASSWORD}`,
   database: `${DATABASE}`,
-  entities: ["src/entities/**/*.js"],
+  entities: ["/src/entities/**/*.js"],
   synchronize: true, 
   logging: false,
   autoLoadEntities: true,
@@ -29,7 +29,7 @@ export const AppDataSource = new DataSource({
 export async function connectDB() {
   try {
     await AppDataSource.initialize();
-    await AppDataSource.synchronize();
+    // await AppDataSource.synchronize();
     console.log("=> Conexión exitosa a la base de datos PostgreSQL!");
   } catch (error) {
     console.error("Error al conectar con la base de datos:", error);
