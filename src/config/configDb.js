@@ -22,7 +22,8 @@ export const AppDataSource = new DataSource({
   autoLoadEntities: true,
   ssl: { 
     "rejectUnauthorized": false 
-  }
+  },
+  migrationsRun: false
 });
 
 export async function connectDB() {
