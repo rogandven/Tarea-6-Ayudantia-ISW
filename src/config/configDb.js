@@ -9,6 +9,8 @@ import { DATABASE, DB_USERNAME, HOST, DB_PASSWORD, DB_PORT } from "./configEnv.j
 // console.log("DB_PORT: " + DB_PORT);
 
 
+export const ENTITIES = ["/src/entities/**/*.js"];
+
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: `${HOST}`,
@@ -16,7 +18,7 @@ export const AppDataSource = new DataSource({
   username: `${DB_USERNAME}`,
   password: `${DB_PASSWORD}`,
   database: `${DATABASE}`,
-  entities: ["/src/entities/**/*.js"],
+  entities: ENTITIES,
   synchronize: true, 
   logging: false,
   autoLoadEntities: true,
@@ -28,9 +30,7 @@ export const AppDataSource = new DataSource({
 
 export async function connectDB() {
   try {
-    console.log(AppDataSource.synchronize);
-    console.log(AppDataSource.username);
-    console.log(AppDataSource.entities);
+    console.log(ENTITIES);
     await AppDataSource.initialize();
     // await AppDataSource.synchronize();
     console.log("=> Conexión exitosa a la base de datos PostgreSQL!");
