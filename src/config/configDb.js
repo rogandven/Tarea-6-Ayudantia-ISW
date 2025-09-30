@@ -20,6 +20,9 @@ export const AppDataSource = new DataSource({
   synchronize: true, 
   logging: false,
   autoLoadEntities: true,
+  ssl: { 
+    "rejectUnauthorized": false 
+  }
 });
 
 export async function connectDB() {
