@@ -2,7 +2,7 @@ import { handleErrorClient, handleSuccess } from "../Handlers/responseHandlers.j
 import { getToken, getUserFromToken } from "../middleware/auth.middleware.js";
 import { blackListToken } from "../services/auth.service.js";
 import { editUser, deleteUser } from "../services/user.service.js";
-import { usuarioGetPrivateProfileValidation, usuarioExistingFieldsValidation } from "../validations/usuario.validation.js";
+import { usuarioPrivateProfileQueryValidation, usuarioIntegrityValidation, usuarioOldDataQueryValidation, usuarioDataBodyValidation } from "../validations/usuario.validation.js";
 
 export function getPublicProfile(req, res) {
   handleSuccess(res, 200, "Perfil público obtenido exitosamente", {
@@ -12,11 +12,11 @@ export function getPublicProfile(req, res) {
 
 export function getPrivateProfile(req, res) {
   const user = req.user;
-  var result = usuarioGetPrivateProfileValidation.validate(req.user);
+  var result = usuarioPrivateProfileQueryValidation.validate(req.user);
   if (result.error) {
     return handleErrorClient(res, 400, result.error.message);
   }
-  result = usuarioExistingFieldsValidation.validate(req.user);
+  result = usuarioIntegrityValidation.validate(req.user);
   if (result.error) {
     return handleErrorClient(res, 400, result.error.message);
   }
@@ -28,26 +28,31 @@ export function getPrivateProfile(req, res) {
 }
 
 export async function editPrivateProfile(req, res) {
-  const user = getUserFromToken(req, res);
-  const oldData = {
-    id: user.id,
-    email: user.email
-  }
-  if (!oldData.id || !oldData.email) {
-    return handleErrorClient(res, 401, "Datos de usuario no proporcionados.");
-  }
-  const newData = {
-    email: req.body.email,
-    password: req.body.password
-  }  
-  if (newData.email === undefined && newData.password === undefined) {
-    return handleSuccess(res, 200, "No hay nada que actualizar.");
-  }
-  if ((newData.email === oldData.email) && newData.password === undefined) {
-    return handleSuccess(res, 200, "No hay nada que actualizar.");
-  }  
+  const oldData = getUserFromToken(req, res);
+  var result = usuarioOldDataQueryValidation.validate(oldData);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  } 
+  result = usuarioIntegrityValidation.validate(oldData);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  } 
+
+  const newData = req.body;
+  result = usuarioDataBodyValidation.validate(newData);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  } 
+  result = usuarioIntegrityValidation.validate(newData);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  } 
+
   if (oldData.email === newData.email) {
     delete newData.email;
+  }
+  if (newData.email === undefined && newData.password === undefined) {
+    return handleSuccess(res, 204, "No hay nada que actualizar.");
   }
 
   try {
@@ -64,14 +69,17 @@ export async function editPrivateProfile(req, res) {
 }
 
 export async function deletePrivateProfile(req, res) {
-  const user = getUserFromToken(req, res);
-  const oldData = {
-    id: user.id,
-    email: user.email
-  }
-  if (!oldData.id || !oldData.email) {
-    return handleErrorClient(res, 401, "Datos de usuario no proporcionados.");
-  }
+  const oldData = getUserFromToken(req, res);
+
+  var result = usuarioOldDataQueryValidation.validate(oldData);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  } 
+  result = usuarioIntegrityValidation.validate(oldData);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  } 
+
   try {
     await deleteUser(oldData);
     await blackListToken(getToken(req));    

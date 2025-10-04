@@ -9,7 +9,7 @@ export const validateTimeStamp = (value, helper) => {
     return true;
 }
 
-export const usuarioExistingFieldsValidation = Joi.object({
+export const usuarioIntegrityValidation = Joi.object({
     id: Joi.number().integer().positive().messages({
         "number.base": "El ID debe ser un número",
         "number.integer": "El ID debe ser un entero",
@@ -53,7 +53,7 @@ export const usuarioExistingFieldsValidation = Joi.object({
     "object.unknown": "No se permiten campos adicionales"
 });
 
-export const usuarioGetPrivateProfileValidation = Joi.object({
+export const usuarioPrivateProfileQueryValidation = Joi.object({
     sub: Joi.required().messages({
         "any.required": "El ID es obligatorio"
     }),
@@ -66,6 +66,28 @@ export const usuarioGetPrivateProfileValidation = Joi.object({
     exp: Joi.required().messages({
         "any.required": "La fecha de expiración es obligatoria"
     }),          
+}).unknown(false).messages({
+    "object.unknown": "No se permiten campos adicionales"
+});
+
+export const usuarioOldDataQueryValidation = Joi.object({
+    id: Joi.required().messages({
+        "any.required": "El ID es obligatorio"
+    }),
+    email: Joi.required().messages({
+        "any.required": "El correo es obligatorio"
+    })    
+}).unknown(false).messages({
+    "object.unknown": "No se permiten campos adicionales"
+});
+
+export const usuarioDataBodyValidation = Joi.object({
+    email: Joi.any().required().messages({
+        "any.required": "El correo es obligatorio"
+    }),
+    password: Joi.any().required().messages({
+        "any.required": "La contraseña es obligatoria"
+    }),
 }).unknown(false).messages({
     "object.unknown": "No se permiten campos adicionales"
 });
