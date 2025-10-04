@@ -14,7 +14,7 @@ export function getPrivateProfile(req, res) {
   console.log(user);
   
   try {
-    console.log(JSON.stringify(user))
+    console.log(JSON.stringify(user));
   } catch (error) {}
 
   handleSuccess(res, 200, "Perfil privado obtenido exitosamente", {
