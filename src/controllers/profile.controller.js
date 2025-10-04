@@ -15,7 +15,9 @@ export function getPrivateProfile(req, res) {
   try {
     console.log(user);
     console.log(JSON.stringify(user));
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   handleSuccess(res, 200, "Perfil privado obtenido exitosamente", {
     message: `¡Hola, ${user.email}! Este es tu perfil privado. Solo tú puedes verlo.`,
