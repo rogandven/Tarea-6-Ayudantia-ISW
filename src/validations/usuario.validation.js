@@ -66,4 +66,6 @@ export const usuarioGetPrivateProfileValidation = Joi.object({
     exp: Joi.required().messages({
         "any.required": "La fecha de expiración es obligatoria"
     }),          
+}).unknown(false).messages({
+    "object.unknown": "No se permiten campos adicionales"
 });

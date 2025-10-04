@@ -2,7 +2,7 @@ import { handleErrorClient, handleSuccess } from "../Handlers/responseHandlers.j
 import { getToken, getUserFromToken } from "../middleware/auth.middleware.js";
 import { blackListToken } from "../services/auth.service.js";
 import { editUser, deleteUser } from "../services/user.service.js";
-import { usuarioGetPrivateProfileValidation } from "../validations/usuario.validation.js";
+import { usuarioGetPrivateProfileValidation, usuarioExistingFieldsValidation } from "../validations/usuario.validation.js";
 
 export function getPublicProfile(req, res) {
   handleSuccess(res, 200, "Perfil público obtenido exitosamente", {
@@ -12,16 +12,14 @@ export function getPublicProfile(req, res) {
 
 export function getPrivateProfile(req, res) {
   const user = req.user;
-  
-  usuarioGetPrivateProfileValidation(req.user);
-
-  /*try {
-    console.log(user);
-    console.log(JSON.stringify(user));
-  } catch (error) {
-    console.log(error);
-  }*/
-
+  var result = usuarioGetPrivateProfileValidation.validate(req.user);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  }
+  result = usuarioExistingFieldsValidation.validate(req.user);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  }
 
   handleSuccess(res, 200, "Perfil privado obtenido exitosamente", {
     message: `¡Hola, ${user.email}! Este es tu perfil privado. Solo tú puedes verlo.`,
