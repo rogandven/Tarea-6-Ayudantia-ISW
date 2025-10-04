@@ -11,9 +11,9 @@ export function getPublicProfile(req, res) {
 
 export function getPrivateProfile(req, res) {
   const user = req.user;
-  console.log(user);
   
   try {
+    console.log(user);
     console.log(JSON.stringify(user));
   } catch (error) {}
 
