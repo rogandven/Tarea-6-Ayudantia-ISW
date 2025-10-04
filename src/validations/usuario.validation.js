@@ -22,9 +22,9 @@ export const usuarioIntegrityValidation = Joi.object({
     }),    
     email: Joi.string().email().min(10).max(999).messages({
         "string.base":"El correo debe ser una cadena de caracteres",
-        "string.email": "El correo debe estar en un formato válido AAAAAAAAAA",
-        "any.email": "El correo debe estar en un formato válido BBBBBBBB",
-        "email.base": "El correo debe estar en un formato válido CCCCCCCCCCC",
+        "string.email": "El correo debe estar en un formato válido",
+        "any.email": "El correo debe estar en un formato válido",
+        "email.base": "El correo debe estar en un formato válido",
         "string.min": "El correo debe tener por lo menos 10 caracteres",
         "string.max":  "El correo debe tener menos de 1000 caracteres"
     }),
