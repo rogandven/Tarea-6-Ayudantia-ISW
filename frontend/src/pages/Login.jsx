@@ -6,8 +6,11 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
+        setMessage("");
+
         e.preventDefault();
         // console.log({ email, password });
         try {
@@ -16,10 +19,10 @@ const Login = () => {
             if (response.status === 200) {
                 navigate("/home");
             } else {
-                // alert(JSON.stringify(response));
+                setMessage("❌ Usuario o clave incorrectos");
             }
         } catch (error) {
-            alert(error);
+            setMessage("❌ Error al conectar con la base de datos");
         }
     };    
     
@@ -68,6 +71,8 @@ const Login = () => {
                     >
                         Iniciar sesión
                     </button>
+
+                    <p className='text-red-600 w-full h-full text-center'>{message}</p>
                 </form>
             </div>
         </div>
