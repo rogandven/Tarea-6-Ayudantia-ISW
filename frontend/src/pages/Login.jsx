@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../services/auth.service';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -8,8 +9,21 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ email, password });
-    };    return (
+        // console.log({ email, password });
+        try {
+            const response = await login({email, password});
+            if (response.request.status === 200) {
+                navigate("/home");
+            } else {
+                alert("Usuario o clave incorrectos XD");
+            }
+        } catch (error) {
+            alert(error);
+        }
+    };    
+    
+    
+    return (
         <div className="min-h-screen bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md transform transition-all hover:scale-105">
                 <form className="space-y-6" onSubmit={handleSubmit}>
