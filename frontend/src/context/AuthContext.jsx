@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
     const storedUser = sessionStorage.getItem('usuario');
     
     if (token && storedUser) {
+      // console.log(token);
+      // console.log(storedUser);
       try {
         const decoded = jwtDecode(token);
         if (decoded.exp * 1000 > Date.now()) {

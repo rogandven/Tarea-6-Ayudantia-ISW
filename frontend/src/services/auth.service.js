@@ -13,9 +13,12 @@ export async function login(dataUser) {
         const { token, user } = response.data.data;
         
         cookies.set('jwt-auth', token, { path: '/' });
+        // alert("Login exitoso");
+        // alert(JSON.stringify(user));
         sessionStorage.setItem('usuario', JSON.stringify(user));
         
-        return response.data;
+        // return response.data;
+        return response;
     } catch (error) {
         return error.response?.data || { message: 'Error al conectar con el servidor' };
     }

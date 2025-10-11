@@ -12,10 +12,11 @@ const Login = () => {
         // console.log({ email, password });
         try {
             const response = await login({email, password});
-            if (response.request.status === 200) {
+            // alert(JSON.stringify(response.status));
+            if (response.status === 200) {
                 navigate("/home");
             } else {
-                alert("Usuario o clave incorrectos XD");
+                // alert(JSON.stringify(response));
             }
         } catch (error) {
             alert(error);
