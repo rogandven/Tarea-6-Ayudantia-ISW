@@ -10,10 +10,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = cookies.get('jwt-auth');
     const storedUser = sessionStorage.getItem('usuario');
-    
+    console.log(token);
+    console.log(storedUser);
+
     if (token && storedUser) {
-      // console.log(token);
-      // console.log(storedUser);
       try {
         const decoded = jwtDecode(token);
         if (decoded.exp * 1000 > Date.now()) {

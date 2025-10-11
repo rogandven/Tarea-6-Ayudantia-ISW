@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service';
 
+const REGISTER_PATH = "/register"
+
 const errorMessage = (message) => {
     if (!message || !message.toString) {
         message = "Error desconocido"; 
@@ -15,6 +17,11 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+
+    const handleRegister = (e) => {
+       e.preventDefault();
+       navigate(REGISTER_PATH);
+    }
 
     const handleSubmit = async (e) => {
         setMessage("");
@@ -81,7 +88,7 @@ const Login = () => {
                     </button>
 
                     <p className='text-red-600 text-2xl w-full h-full text-center'>{message}</p>
-                    <p className='text-center'>¿No tienes cuenta? <a className='text-purple-600' href='/register'>¡Regístrate!</a></p>
+                    <p className='text-center'>¿No tienes cuenta? <a className='text-purple-600' onClick={handleRegister} href={REGISTER_PATH}>¡Regístrate!</a></p>
                 </form>
             </div>
         </div>
