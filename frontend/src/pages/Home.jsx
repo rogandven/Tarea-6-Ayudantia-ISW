@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getProfile } from '../services/profile.service';
+import Profile from '../components/Profile';
 
 const Home = () => {
   const [profileData, setProfileData] = useState(null);
@@ -16,16 +17,18 @@ const Home = () => {
         
         <button 
           onClick={handleGetProfile} 
-          className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
+          className="w-full mb-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
         >
           Obtener Perfil
         </button>
 
-        {profileData && (
+        {/* profileData && (
           <div className="mt-8 bg-gray-50 rounded-xl p-6 border border-gray-200">
             <pre className="text-sm text-gray-700 overflow-auto">{JSON.stringify(profileData, null, 2)}</pre>
           </div>
-        )}
+        ) */}
+
+        <Profile profile = {profileData}></Profile>
       </div>
     </div>
   );
