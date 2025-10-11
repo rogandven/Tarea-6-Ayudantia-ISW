@@ -2,6 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/auth.service';
 
+const errorMessage = (message) => {
+    if (!message || !message.toString) {
+        message = "Error desconocido"; 
+    }
+
+    return "❌ " + message.toString();
+}
+
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -19,10 +27,10 @@ const Login = () => {
             if (response.status === 200) {
                 navigate("/home");
             } else {
-                setMessage("❌ Usuario o clave incorrectos");
+                setMessage(errorMessage("Usuario o clave incorrectos"));
             }
         } catch (error) {
-            setMessage("❌ Error al conectar con la base de datos");
+            setMessage(errorMessage("Error al conectar con la base de datos"));
         }
     };    
     
