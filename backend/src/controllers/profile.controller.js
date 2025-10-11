@@ -1,7 +1,7 @@
 import { handleErrorClient, handleSuccess } from "../Handlers/responseHandlers.js";
 import { getToken, getUserFromToken } from "../middleware/auth.middleware.js";
 import { blackListToken } from "../services/auth.service.js";
-import { editUser, deleteUser } from "../services/user.service.js";
+import { editUser, deleteUser, findUserById } from "../services/user.service.js";
 import { usuarioPrivateProfileQueryValidation, usuarioIntegrityValidation, usuarioOldDataQueryValidation, usuarioDataBodyValidation } from "../validations/usuario.validation.js";
 
 export function getPublicProfile(req, res) {
@@ -10,6 +10,7 @@ export function getPublicProfile(req, res) {
   });
 }
 
+/*
 export function getPrivateProfile(req, res) {
   const user = req.user;
   var result = usuarioPrivateProfileQueryValidation.validate(req.user);
@@ -20,6 +21,35 @@ export function getPrivateProfile(req, res) {
   if (result.error) {
     return handleErrorClient(res, 400, result.error.message);
   }
+
+  handleSuccess(res, 200, "Perfil privado obtenido exitosamente", {
+    message: `¡Hola, ${user.email}! Este es tu perfil privado. Solo tú puedes verlo.`,
+    userData: user,
+  });
+}
+*/
+
+export async function getPrivateProfile(req, res) {
+  const user = req.user;
+  var result = usuarioPrivateProfileQueryValidation.validate(req.user);
+
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  }
+  result = usuarioIntegrityValidation.validate(req.user);
+  if (result.error) {
+    return handleErrorClient(res, 400, result.error.message);
+  }
+
+  var additionalData = await findUserById(user.sub);
+  if (!additionalData) {
+    return handleErrorClient(res, 401, "Usuario no existe");
+  }
+
+  // console.log(additionalData);
+  user.password = (additionalData.password || "ifeelsocleanlikeamoneymachine");
+  user.created_at = (additionalData.created_at || "1970-01-01T00:00:00.007Z");
+  user.updated_at = (additionalData.updated_at || "1970-01-01T00:00:00.007Z");
 
   handleSuccess(res, 200, "Perfil privado obtenido exitosamente", {
     message: `¡Hola, ${user.email}! Este es tu perfil privado. Solo tú puedes verlo.`,

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/auth.service';
+import { register } from '../services/auth.service';
 
 const errorMessage = (message) => {
     if (!message || !message.toString) {
@@ -10,7 +10,7 @@ const errorMessage = (message) => {
     return "❌ " + message.toString();
 }
 
-const Login = () => {
+const Register = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,25 +22,27 @@ const Login = () => {
         e.preventDefault();
         // console.log({ email, password });
         try {
-            const response = await login({email, password});
-            // alert(JSON.stringify(response.status));
-            if (response.status === 200) {
-                navigate("/home");
-            } else {
-                setMessage(errorMessage("Usuario o clave incorrectos"));
+            const response = await register({email, password});
+            if (!response) {
+                setMessage(errorMessage("Error desconocido"));
+                return;
             }
+            if (response.status && response.status !== "Success") {
+                setMessage(errorMessage(response.message));
+                return;
+            }
+            navigate("/");
         } catch (error) {
             setMessage(errorMessage("Error al conectar con la base de datos"));
         }
     };    
-    
     
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md transform transition-all hover:scale-105">
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <h1 className="text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 mb-8">
-                        Iniciar sesión
+                        Regístrate
                     </h1>
                     
                     <div className="space-y-2">
@@ -73,19 +75,27 @@ const Login = () => {
                         />
                     </div>
 
-                    <button 
-                        type="submit" 
-                        className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
-                    >
-                        Iniciar sesión
-                    </button>
+                    <div className='flex flex-row'>
+                        <button 
+                            type="submit" 
+                            className="mr-2 w-full bg-gradient-to-r from-green-800 to-green-600 hover:from-green-500 hover:to-green-400 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
+                        >
+                            Registrar
+                        </button>
+                        <button 
+                            type="button" 
+                            className="ml-2 w-full bg-gradient-to-r from-red-900 to-red-700 hover:from-red-600 hover:to-red-500 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
+                        ><a href="/">
+                            Salir
+                        </a>
+                        </button>
+                    </div>
 
-                    <p className='text-red-600 text-2xl w-full h-full text-center'>{message}</p>
-                    <p className='text-center'>¿No tienes cuenta? <a className='text-purple-600' href='/register'>¡Regístrate!</a></p>
+                    <p className='text-red-600 text-2xl w-full text-center'>{message}</p>
                 </form>
             </div>
         </div>
     );
 }
 
-export default Login;
+export default Register;
