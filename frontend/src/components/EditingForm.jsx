@@ -63,7 +63,7 @@ export const EditingForm = ({setIsEditing}) => {
         setIsEditing(false);
     }
     
-    return (<form className={"space-y-6"} onSubmit={null}>              
+    return (<form className={"space-y-6"}>              
               <div className="space-y-2">
                   <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
                       Email
