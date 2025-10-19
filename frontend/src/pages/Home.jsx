@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { getProfile } from '../services/profile.service';
-import EditingForm from '../components/EditingForm';
-import ButtonContainer from '../components/ButtonContainer';
-import ProfileContainer from '../components/ProfileContainer';
+import { getProfile } from '../services/profile.service.js';
+import EditingForm from '../components/EditingForm.jsx';
+import ButtonContainer from '../components/ButtonContainer.jsx';
+import ProfileContainer from '../components/ProfileContainer.jsx';
+
 
 const Home = () => {
   const DEFAULT_TEXT = "Página de Inicio";
@@ -26,17 +27,14 @@ const Home = () => {
     return DEFAULT_TEXT;
   }
 
-  const [editingEmail, setEditingEmail] = useState("");
-  const [editingPassword, setEditingPassword] = useState("");
-
   const DEFAULT_PROFILE_TEXT = "Obtener Perfil";
   const HIDE_PROFILE_TEXT = "Ocultar Perfil";
 
-  const handleEditProfile = async () => {
+  const handleEditingState = () => {
     setIsEditing(true);
   }
 
-  const handleDeleteProfile = async () => {
+  const handleDeleteProfile = () => {
     setIsDeleting(true);
   }
 
@@ -58,7 +56,7 @@ const Home = () => {
             {titleText()}
           </h1>
           { !isDeleting && !isEditing && (
-              <ButtonContainer handleEditProfile={handleEditProfile} handleDeleteProfile={handleDeleteProfile}></ButtonContainer>
+              <ButtonContainer handleEditingState={handleEditingState} handleDeleteProfile={handleDeleteProfile}></ButtonContainer>
             )
           }     
         </div>
@@ -68,7 +66,7 @@ const Home = () => {
         }
         {
           isEditing && (
-            <EditingForm handleEditProfile={handleEditProfile} editingEmail={editingEmail} setEditingEmail={setEditingEmail} editingPassword={editingPassword} setEditingPassword={setEditingPassword} setIsEditing={setIsEditing}></EditingForm>
+            <EditingForm setIsEditing={setIsEditing}></EditingForm>
           )
         }
         

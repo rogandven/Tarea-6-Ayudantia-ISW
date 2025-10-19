@@ -1,8 +1,8 @@
-export const ButtonContainer = ({handleEditProfile, handleDeleteProfile}) => {
+export const ButtonContainer = ({handleEditingState, handleDeleteProfile}) => {
     return (
     <div>
         <button 
-            onClick={handleEditProfile}
+            onClick={handleEditingState}
             className="mb-3 mr-3 bg-gradient-to-r from-green-800 to-green-600 hover:from-green-500 hover:to-green-400 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
         >Editar</button>        
         <button 

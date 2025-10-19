@@ -46,6 +46,10 @@ export async function getPrivateProfile(req, res) {
     return handleErrorClient(res, 401, "Usuario no existe");
   }
 
+  if (user.email !== additionalData.email) {
+    user.email = (additionalData.email || user.email);
+  }
+
   // console.log(additionalData);
   user.password = (additionalData.password || "ifeelsocleanlikeamoneymachine");
   user.created_at = (additionalData.created_at || "1970-01-01T00:00:00.007Z");
