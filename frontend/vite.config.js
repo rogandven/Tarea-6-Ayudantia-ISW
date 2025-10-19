@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const PORT = import.meta.env.PORT
+const PORT = (import.meta.env && import.meta.env.PORT) || 443;
 
 export default defineConfig({
   preview: {
