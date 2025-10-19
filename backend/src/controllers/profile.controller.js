@@ -46,6 +46,10 @@ export async function getPrivateProfile(req, res) {
     return handleErrorClient(res, 401, "Usuario no existe");
   }
 
+  if (user.email !== additionalData.email) {
+    user.email = (additionalData.email || user.email);
+  }
+
   // console.log(additionalData);
   user.password = (additionalData.password || "ifeelsocleanlikeamoneymachine");
   user.created_at = (additionalData.created_at || "1970-01-01T00:00:00.007Z");
@@ -69,19 +73,19 @@ export async function editPrivateProfile(req, res) {
   } 
 
   const newData = req.body;
-  result = usuarioDataBodyValidation.validate(newData);
-  if (result.error) {
-    return handleErrorClient(res, 400, result.error.message);
+  // console.log(newData);
+  if (!newData.email || (oldData.email === newData.email)) {
+    delete newData.email;
+  }
+  if (!newData.password) {
+    delete newData.password;
   } 
   result = usuarioIntegrityValidation.validate(newData);
   if (result.error) {
     return handleErrorClient(res, 400, result.error.message);
-  } 
-
-  if (oldData.email === newData.email) {
-    delete newData.email;
-  }
+  }  
   if (newData.email === undefined && newData.password === undefined) {
+    // console.log("si paso por aqui xd");
     return handleSuccess(res, 204, "No hay nada que actualizar.");
   }
 

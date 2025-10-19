@@ -17,7 +17,7 @@ const Form = ({ title, fields, buttonText, onSubmit, onChange }) => {
       <h1 className="text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 mb-8">
         {title}
       </h1>
-      {fields.map((field, index) => (
+      {fields.map && fields.map((field, index) => (
         <div key={index} className="space-y-2">
           <label htmlFor={field.name} className="block text-sm font-semibold text-gray-700">
             {field.label}

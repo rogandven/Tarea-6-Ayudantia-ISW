@@ -3,17 +3,14 @@ import { jwtDecode } from 'jwt-decode';
 import cookies from 'js-cookie';
 
 const AuthContext = createContext();
-export const TOTAL_FAILURE = -1;
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
     const token = cookies.get('jwt-auth');
     const storedUser = sessionStorage.getItem('usuario');
-    // console.log(token);
-    // console.log(storedUser);
-
+    
     if (token && storedUser) {
       try {
         const decoded = jwtDecode(token);
@@ -22,13 +19,13 @@ export const AuthProvider = ({ children }) => {
         } else {
           cookies.remove('jwt-auth');
           sessionStorage.removeItem('usuario');
-          setUser(TOTAL_FAILURE);
+          setUser(null);
         }
       } catch (error) {
         console.error('Error al decodificar token:', error);
         cookies.remove('jwt-auth');
         sessionStorage.removeItem('usuario');
-        setUser(TOTAL_FAILURE);
+        setUser(null);
       }
     }
   }, []);

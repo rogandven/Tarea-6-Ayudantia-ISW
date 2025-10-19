@@ -1,24 +1,34 @@
-import { Navigate } from 'react-router-dom';
+/* import { Navigate } from 'react-router-dom';
 import { useAuth } from '@context/AuthContext';
-import { TOTAL_FAILURE } from '@context/AuthContext';
-import Loading from '@pages/Loading.jsx';
+import Loading from '../pages/Loading';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
-  // alert(JSON.stringify(user));
-
-  if (user === TOTAL_FAILURE) {
+  if (user === undefined) {
+    return <Loading destination={window.location.href}></Loading>
+  } else if (user === null) {
     return <Navigate to="/auth" replace />;
   }
 
-  if (user !== null) {
+  return children;
+};
+
+export default ProtectedRoute;
+*/
+
+import { Navigate } from 'react-router-dom';
+
+const ProtectedRoute = ({ children }) => {
+    const storedUser = JSON.parse(sessionStorage.getItem('usuario'));
+
+    const isAuthenticated = !!storedUser;
+
+    if (!isAuthenticated) {
+        return <Navigate to="/auth" />;
+    }
+
     return children;
-  } else {
-    return (
-      <Loading></Loading>
-    );
-  }
 };
 
 export default ProtectedRoute;
