@@ -117,7 +117,7 @@ const Register = () => {
                         <button 
                             type="button" 
                             className="ml-2 w-full bg-gradient-to-r from-red-900 to-red-700 hover:from-red-600 hover:to-red-500 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
-                            
+                            onClick={handleExit}
                         ><a href={EXIT_PATH} onClick={handleExit}>
                             Salir
                         </a>
@@ -131,7 +131,7 @@ const Register = () => {
                         <button 
                             type="button" 
                             className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
-                            
+                            onClick={handleExit}
                         ><a href={EXIT_PATH} onClick={handleExit}>
                             Volver
                         </a>

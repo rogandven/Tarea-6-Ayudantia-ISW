@@ -41,7 +41,7 @@ export async function blackListToken(token) {
   try {
     return await tokenBlackListRepository.save({token: token});
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return;
   }
 }

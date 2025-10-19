@@ -22,13 +22,13 @@ export const AuthProvider = ({ children }) => {
         } else {
           cookies.remove('jwt-auth');
           sessionStorage.removeItem('usuario');
-          setUser(TOTAL_FAILURE);
+          // setUser(TOTAL_FAILURE);
         }
       } catch (error) {
         console.error('Error al decodificar token:', error);
         cookies.remove('jwt-auth');
         sessionStorage.removeItem('usuario');
-        setUser(TOTAL_FAILURE);
+        // setUser(TOTAL_FAILURE);
       }
     }
   }, []);
@@ -41,6 +41,14 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
+  }
+  return context;
+};
+
+export const useAuthAlternate = (user) => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth debe ser usado dentro de un AuthProvider');

@@ -7,18 +7,21 @@ const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
   // alert(JSON.stringify(user));
-
   if (user === TOTAL_FAILURE) {
     return <Navigate to="/auth" replace />;
+  } else {
+    return children;
   }
 
-  if (user !== null) {
+  
+  /* if (user !== null) {
     return children;
   } else {
     return (
       <Loading></Loading>
     );
   }
+  */
 };
 
 export default ProtectedRoute;

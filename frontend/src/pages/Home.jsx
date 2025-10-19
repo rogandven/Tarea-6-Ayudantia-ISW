@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import { getProfile } from '../services/profile.service.js';
 import EditingForm from '../components/EditingForm.jsx';
+import DeleteForm from '../components/DeleteForm.jsx';
 import ButtonContainer from '../components/ButtonContainer.jsx';
 import ProfileContainer from '../components/ProfileContainer.jsx';
-
 
 const Home = () => {
   const DEFAULT_TEXT = "Página de Inicio";
   const EDITING_TEXT = "Editar Perfil";
   const DELETING_TEXT = "Eliminar Perfil";
-
-
 
   const [profileData, setProfileData] = useState(null);
 
@@ -31,10 +29,12 @@ const Home = () => {
   const HIDE_PROFILE_TEXT = "Ocultar Perfil";
 
   const handleEditingState = () => {
+    setProfileData(null);
     setIsEditing(true);
   }
 
   const handleDeleteProfile = () => {
+    setProfileData(null);
     setIsDeleting(true);
   }
 
@@ -69,7 +69,11 @@ const Home = () => {
             <EditingForm setIsEditing={setIsEditing}></EditingForm>
           )
         }
-        
+        {
+          isDeleting && (
+            <DeleteForm setIsDeleting={setIsDeleting}></DeleteForm>
+          )
+        }
       </div>
     </div>
   );

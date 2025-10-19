@@ -20,3 +20,12 @@ export async function editProfile(data) {
         return error.response?.data || { message: 'Error al conectar con el servidor' };
     }
 }
+
+export async function deleteProfile() {
+    try {
+        const response = await axios.delete('/profile/private');
+        return (response.data || response);
+    } catch (error) {
+        return error.response?.data || { message: 'Error al eliminar' };
+    }
+}
