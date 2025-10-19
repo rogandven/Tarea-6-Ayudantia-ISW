@@ -5,8 +5,12 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const PORT = import.meta.env.PORT
 
 export default defineConfig({
+  preview: {
+    port: PORT || 443,
+  },  
   plugins: [react()],
   resolve: {
     alias: {
