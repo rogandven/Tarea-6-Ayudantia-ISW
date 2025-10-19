@@ -45,7 +45,7 @@ export const EditingForm = ({setIsEditing}) => {
                 setError(null);
                 return;
             }
-            console.log(response.status || "Estado no encontrado");
+            // console.log(response.status || "Estado no encontrado");
             if (response.status && response.status === "Success") {
                 setSuccess(response.message || null);
                 return;
