@@ -4,7 +4,9 @@ import { useAuth } from '@context/AuthContext';
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
-  if (!user) {
+  if (user === undefined) {
+    window.location.reload();
+  } else if (user === null) {
     return <Navigate to="/auth" replace />;
   }
 
