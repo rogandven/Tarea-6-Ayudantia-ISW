@@ -5,7 +5,7 @@ const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
   if (user === undefined) {
-    window.location.reload();
+    return window.location.reload();
   } else if (user === null) {
     return <Navigate to="/auth" replace />;
   }
