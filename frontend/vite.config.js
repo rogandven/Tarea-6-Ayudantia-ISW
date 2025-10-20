@@ -12,10 +12,16 @@ const PORT = process.env.VITE_PORT || 443;
 
 export default defineConfig({
   server: {
-    port: PORT
+    host: '0.0.0.0',
+    port: PORT,
+    strictPort: true,
+    cors: true
   },
   preview: {
-    port: PORT
+    host: '0.0.0.0',
+    port: PORT,
+    strictPort: true,
+    cors: true
   },
   plugins: [react()],
   resolve: {
