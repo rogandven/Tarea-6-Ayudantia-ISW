@@ -8,11 +8,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const PORT = process.env.VITE_PORT || 443;
-const BASE = process.env.VITE_BASE_URL || "http://localhost:80";
+// const BASE = process.env.VITE_BASE_URL || "http://localhost:80";
 // console.log(PORT);
 
 export default defineConfig({
-  base: BASE,
+  base: "/",
   server: {
     host: '0.0.0.0',
     port: PORT,
