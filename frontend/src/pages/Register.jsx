@@ -23,7 +23,7 @@ const returnOppositeVisibility = (attribute) => {
 }
 
 const Register = () => {
-    console.log(import.meta.env.VITE_BASE_URL);
+    // console.log(import.meta.env.VITE_BASE_URL);
 
     const handleExit = (e) => {
        e.preventDefault();
