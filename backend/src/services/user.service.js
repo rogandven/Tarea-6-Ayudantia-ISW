@@ -54,7 +54,7 @@ export async function deleteUser(oldData) {
   try {
     return await userRepository.delete({id: user.id});
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("No se pudo eliminar el usuario.");
   }
 }
