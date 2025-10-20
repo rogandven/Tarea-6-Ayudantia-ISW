@@ -1,9 +1,14 @@
 "use strict";
 import { fileURLToPath } from "url";
 import path from "path";
-import { loadEnv } from 'vite';
+import dotenv from "dotenv";
 
+//Conseguir la ruta del archivo
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(_filename);
+const envFilePath = path.resolve(_dirname, ".env");
 
+dotenv.config({ path: envFilePath });
 
 export const HOST = process.env.DB_HOST || process.env.HOST || "localhost";
 export const PORT = process.env.PORT || 3000;
