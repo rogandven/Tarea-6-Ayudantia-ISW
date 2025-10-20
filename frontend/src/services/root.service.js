@@ -1,6 +1,6 @@
 import axios from 'axios';
 import cookies from 'js-cookie';
-import { VITE_BASE_URL } from '../../config/configEnv.js';
+import { VITE_BASE_URL } from '../config/configEnv.js';
 
 const API_URL = VITE_BASE_URL;
 
