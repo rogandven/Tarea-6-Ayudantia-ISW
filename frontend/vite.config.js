@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
-const PORT = process.env.VITE_PORT;
+const PORT = process.env.VITE_PORT || 443;
 console.log(PORT);
 
 export default defineConfig({
